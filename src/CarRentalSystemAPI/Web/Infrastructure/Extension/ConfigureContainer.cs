@@ -49,16 +49,12 @@
         {
             app.UseSwagger();
 
-            app.UseSwaggerUI(setupAction =>
-            {
-                setupAction.SwaggerEndpoint("/swagger/v1/swagger.json", "CarRentalSystem API");
-                setupAction.RoutePrefix = "OpenAPI";
-            });
+            app.UseSwaggerUI();
         }
 
         public static void UseHealthCheck(this IApplicationBuilder app)
         {
-            app.UseHealthChecks("/health", new HealthCheckOptions
+            app.UseHealthChecks("/healthz", new HealthCheckOptions
             {
                 Predicate = _ => true,
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,

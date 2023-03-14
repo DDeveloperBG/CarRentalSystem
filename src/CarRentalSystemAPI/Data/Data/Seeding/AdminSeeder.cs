@@ -23,7 +23,14 @@
             var adminUsername = configuration[this.adminUsernamePath];
             if (!dbContext.Users.Any(user => user.UserName == adminUsername))
             {
-                var user = new ApplicationUser { UserName = adminUsername, Email = adminUsername };
+                var user = new ApplicationUser
+                {
+                    UserName = adminUsername,
+                    Email = adminUsername,
+                    Forename = string.Empty,
+                    Surname = string.Empty,
+                    PersonalIdentificationNumber = string.Empty,
+                };
                 var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
                 await userManager.CreateAsync(user, configuration[this.adminPasswordKeyPath]);

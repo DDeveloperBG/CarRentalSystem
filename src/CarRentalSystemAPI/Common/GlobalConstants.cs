@@ -2,8 +2,12 @@
 {
     public static class GlobalConstants
     {
+        public const string SystemName = "CarRentalSystem";
+
         public static class Roles
         {
+            public const string UserRoleName = "user";
+
             public const string AdministratorRoleName = "admin";
         }
 
@@ -30,9 +34,20 @@
 
             public static class JWT
             {
+                public static readonly string AudienceKey = GetChildKey(ParentObject, "Audience");
+                public static readonly string IssuerKey = GetChildKey(ParentObject, "Issuer");
                 public static readonly string SecretKey = GetChildKey(ParentObject, "Key");
 
                 private const string ParentObject = "JWT_Settings";
+            }
+
+            public static class Gmail
+            {
+                public static readonly string Email = GetChildKey(ParentObject, "Email");
+
+                public static readonly string Password = GetChildKey(ParentObject, "Password");
+
+                private const string ParentObject = "Gmail";
             }
         }
     }

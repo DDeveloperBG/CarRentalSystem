@@ -3,6 +3,7 @@
     using System.Text;
 
     using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -39,9 +40,9 @@
                     options => options.UseSqlServer(configuration.GetDefaultConnectionString()));
             }
 
-            serviceCollection.AddDefaultIdentity<ApplicationUser>((x) => IdentityOptionsProvider.GetIdentityOptions(x, currentEnvironment.IsProduction()))
-                .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            serviceCollection.AddIdentity<ApplicationUser, ApplicationRole>(x => IdentityOptionsProvider.GetIdentityOptions(x, currentEnvironment.IsProduction()))
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
         }
 
         public static void AddVersion(this IServiceCollection serviceCollection)
@@ -54,25 +55,34 @@
             });
         }
 
-        public static void AddAuthentication(
+        public static void AddAuth(
             this IServiceCollection serviceCollection,
             IConfiguration configuration)
         {
             serviceCollection
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(p =>
                 {
                     var key = Encoding.UTF8.GetBytes(configuration[GlobalConstants.ConfigurationKeys.JWT.SecretKey]);
+
                     p.SaveToken = true;
                     p.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
-                        ValidateLifetime = false,
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
                         ValidateIssuerSigningKey = true,
+                        ValidIssuer = configuration[GlobalConstants.ConfigurationKeys.JWT.IssuerKey],
+                        ValidAudience = configuration[GlobalConstants.ConfigurationKeys.JWT.AudienceKey],
                         IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateLifetime = true,
                     };
                 });
+
+            serviceCollection.AddAuthorization();
         }
 
         public static void AddSwaggerOpenAPI(this IServiceCollection serviceCollection)
@@ -83,7 +93,7 @@
                     "v1",
                     new OpenApiInfo()
                     {
-                        Title = "CarRentalSystemAPI",
+                        Title = GlobalConstants.SystemName,
                         Version = "1",
                     });
 
@@ -115,7 +125,7 @@
         {
             serviceCollection.AddHealthChecks()
                 .AddDbContextCheck<ApplicationDbContext>(name: "Application DB Context", failureStatus: HealthStatus.Degraded)
-                .AddUrlGroup(new Uri(configuration[GlobalConstants.ConfigurationKeys.ApplicationUrlKey]), name: "CarRentalSystemAPI", failureStatus: HealthStatus.Degraded)
+                .AddUrlGroup(new Uri(configuration[GlobalConstants.ConfigurationKeys.ApplicationUrlKey]), name: "Client", failureStatus: HealthStatus.Degraded)
                 .AddSqlServer(configuration.GetDefaultConnectionString());
 
             serviceCollection.AddHealthChecksUI(setupSettings: setup =>

@@ -17,39 +17,42 @@
             IWebHostEnvironment currentEnvironment)
         {
             Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
+
             this.configuration = configuration;
+
             this.currentEnvironment = currentEnvironment;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddEndpointsApiExplorer();
 
             services.AddDatabase(this.configuration, this.currentEnvironment);
+
+            services.AddAuth(this.configuration);
 
             services.AddSwaggerOpenAPI();
 
             services.AddVersion();
 
             services.AddSingleton(this.configuration);
-
-            Services.BusinessLogic.DependencyInjection.AddServices(services);
+            Services.BusinessLogic.DependencyInjection.AddServices(services, this.configuration);
             Services.Data.DependencyInjection.AddServices(services);
 
             services.AddHealthCheck(this.configuration);
-
-            services.AddAuthentication(this.configuration);
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory log)
         {
-            AutoMapperConfig.RegisterMappings(typeof(RootDto).GetTypeInfo().Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(RequestResultDTO<>).GetTypeInfo().Assembly);
 
             app.ConfigureDbContext();
 
             if (this.currentEnvironment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.ConfigureSwagger();
             }
             else
             {
@@ -64,7 +67,6 @@
 
             app.UseRouting();
 
-            app.ConfigureSwagger();
             app.UseHealthCheck();
 
             app.UseAuthentication();
