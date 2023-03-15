@@ -9,6 +9,8 @@
 
         Task<RequestResultDTO<UserDTO>> LoginUserAsync(LoginInputDTO userData);
 
+        Task<RequestResultDTO> ConfirmEmailAsync(string userId, string code);
+
         string CreateJWTToken(UserDTO user);
     }
 }

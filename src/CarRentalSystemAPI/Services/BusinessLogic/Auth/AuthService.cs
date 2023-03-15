@@ -199,6 +199,35 @@
             return jwtToken;
         }
 
+        public async Task<RequestResultDTO> ConfirmEmailAsync(string userId, string code)
+        {
+            var user = await this.userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return new RequestResultDTO
+                {
+                    IsSuccessful = false,
+                    Message = $"DB ERROR! Unable to load user with ID '{userId}'.",
+                    DangerLevel = DangerLevel.Danger,
+                };
+            }
+
+            code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+            var result = await this.userManager.ConfirmEmailAsync(user, code);
+
+            if (result.Succeeded)
+            {
+                return new RequestResultDTO(true);
+            }
+
+            return new RequestResultDTO
+            {
+                IsSuccessful = false,
+                Message = string.Join(Environment.NewLine, result.Errors.Select(x => x.Description)),
+                DangerLevel = DangerLevel.Danger,
+            };
+        }
+
         private ApplicationUser CreateUser(RegisterInputDTO userData)
         {
             try

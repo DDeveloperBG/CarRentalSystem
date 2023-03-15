@@ -4,7 +4,7 @@
 
     using WebAPI.Data.Models;
 
-    public class RegisterInputDTO : IValidatingInput
+    public class RegisterInputDTO : ValidatedInput
     {
         [Required]
         public string Username { get; set; }
@@ -27,7 +27,7 @@
         [Required]
         public string Password { get; set; }
 
-        public void Validate()
+        public override void Validate()
         {
             ApplicationUser.ValidateUsername(this.Username);
 

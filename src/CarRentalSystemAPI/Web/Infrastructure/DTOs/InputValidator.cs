@@ -6,11 +6,11 @@
 
     public static class InputValidator
     {
-        public static RequestResultDTO<object> ValidateInput(
-            this IValidatingInput input,
+        public static RequestResultDTO ValidateInput(
+            this ValidatedInput input,
             ModelStateDictionary modelState)
         {
-            var result = new RequestResultDTO<object>()
+            var result = new RequestResultDTO()
             {
                 IsSuccessful = false,
             };

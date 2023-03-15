@@ -1,5 +1,6 @@
 ﻿namespace WebAPI
 {
+    using System.Diagnostics;
     using System.Reflection;
 
     using Serilog;
