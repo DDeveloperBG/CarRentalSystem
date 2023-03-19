@@ -3,7 +3,7 @@
     using System.Text;
     using System.Text.RegularExpressions;
 
-    public class BulgarianPIN
+    public static class BulgarianPIN
     {
         private static readonly Regex RegexPhysicalPerson = new Regex(@"^\d\d[0-5]\d[0-3]\d\d{4}$");
         private static readonly int[] MultipliersPhysicalPerson = { 2, 4, 8, 5, 10, 9, 7, 3, 6 };

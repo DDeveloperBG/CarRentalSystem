@@ -17,7 +17,6 @@
     using WebAPI.Models;
     using WebAPI.Services.BusinessLogic.EmailSender;
     using WebAPI.Services.BusinessLogic.Url;
-    using WebAPI.Services.Data.User;
 
     public class UserService : IUserService
     {
