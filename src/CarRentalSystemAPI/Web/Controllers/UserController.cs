@@ -13,13 +13,30 @@
 
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class AuthController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly IAuthService authService;
+        private readonly IUserService authService;
 
-        public AuthController(IAuthService authService)
+        public UserController(IUserService authService)
         {
             this.authService = authService;
+        }
+
+        [HttpGet]
+        public IActionResult UsernameExists(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                return this.Ok(new RequestResultDTO
+                {
+                    Message = "Username is required!",
+                    DangerLevel = DangerLevel.Warning,
+                });
+            }
+
+            var result = this.authService.UsernameExists(username);
+
+            return this.Ok(result);
         }
 
         [HttpPost]
@@ -29,7 +46,7 @@
 
             if (!validationResult.IsSuccessful)
             {
-                return this.BadRequest(validationResult);
+                return this.Ok(validationResult);
             }
 
             var result = await this.authService.RegisterUserAsync(userData);
@@ -46,7 +63,7 @@
                 });
             }
 
-            return this.BadRequest(result);
+            return this.Ok(result);
         }
 
         [HttpPost]
@@ -56,7 +73,7 @@
 
             if (!validationResult.IsSuccessful)
             {
-                return this.BadRequest(validationResult);
+                return this.Ok(validationResult);
             }
 
             var result = await this.authService.LoginUserAsync(userData);
@@ -72,7 +89,7 @@
                 });
             }
 
-            return this.BadRequest(result);
+            return this.Ok(result);
         }
 
         [HttpPost]
@@ -83,14 +100,14 @@
 
             if (!validationResult.IsSuccessful)
             {
-                return this.BadRequest(validationResult);
+                return this.Ok(validationResult);
             }
 
             var sid = (this.User.Identity as ClaimsIdentity).FindFirst(JwtRegisteredClaimNames.Sid);
 
             if (sid == null)
             {
-                return this.BadRequest(new RequestResultDTO
+                return this.Ok(new RequestResultDTO
                 {
                     IsSuccessful = false,
                     DangerLevel = DangerLevel.Danger,

@@ -1,0 +1,38 @@
+<div class="div-form-wrapper">
+  <h1>Login</h1>
+  <form (ngSubmit)="onSubmit()" [formGroup]="userFormGroup">
+    <mat-error class="error-message">{{ serverError }}</mat-error>
+    <p>
+      <mat-form-field class="user-credentials-input-field" appearance="outline">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          formControlName="username"
+          placeholder="Enter your username"
+          required
+        />
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field class="user-credentials-input-field" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password"
+          required
+        />
+      </mat-form-field>
+    </p>
+    <div class="btn-holder">
+      <button type="submit" mat-raised-button color="primary">Login</button>
+    </div>
+  </form>
+  <div class="text-center mb-4">
+    <p id="already-user-p">
+      Don't have account? Then just
+      <a routerLink="/account/register">Sign-In</a>!
+    </p>
+  </div>
+</div>

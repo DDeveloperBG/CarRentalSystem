@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>CarRentalSystem</span>
+    <span class="spacer">
+      <a mat-button routerLink="/">Home</a>
+      <span *ngIf="!isLoggedIn"> </span>
+    </span>
+    <span *ngIf="!isLoggedIn">
+      <a mat-button routerLink="account/login">Login</a>
+      <a mat-button routerLink="account/register">Register</a>
+    </span>
+    <span *ngIf="isLoggedIn">
+      <button mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+      <a id="profile-anchor" mat-button routerLink="account/profile">
+        <span id="user-greeting-span">Hello, {{ username }}</span>
+        <button mat-icon-button>
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </a>
+      <span>
+        <a id="logout-anchor" mat-button routerLink="account/logout">Logout</a>
+      </span>
+    </span>
+  </mat-toolbar-row>
+</mat-toolbar>

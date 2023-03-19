@@ -19,25 +19,25 @@
     using WebAPI.Services.BusinessLogic.Url;
     using WebAPI.Services.Data.User;
 
-    public class AuthService : IAuthService
+    public class UserService : IUserService
     {
         private readonly JWTSettings jwtSettings;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IUserStore<ApplicationUser> userStore;
         private readonly IEmailSenderService emailSender;
-        private readonly ILogger<AuthService> logger;
+        private readonly ILogger<UserService> logger;
         private readonly IUrlService urlService;
-        private readonly IUserService userService;
+        private readonly Data.User.IUserService userService;
 
-        public AuthService(
+        public UserService(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
-            ILogger<AuthService> logger,
+            ILogger<UserService> logger,
             IEmailSenderService emailSender,
             IUrlService urlService,
-            IUserService userService,
+            Data.User.IUserService userService,
             JWTSettings jwtSettings)
         {
             this.signInManager = signInManager;
@@ -226,6 +226,26 @@
                 Message = string.Join(Environment.NewLine, result.Errors.Select(x => x.Description)),
                 DangerLevel = DangerLevel.Danger,
             };
+        }
+
+        public RequestResultDTO<bool> UsernameExists(string username)
+        {
+            try
+            {
+                return new RequestResultDTO<bool>
+                {
+                    IsSuccessful = true,
+                    Data = this.userService.UsernameExists(username),
+                };
+            }
+            catch (Exception ex)
+            {
+                return new RequestResultDTO<bool>
+                {
+                    Message = ex.Message,
+                    DangerLevel = DangerLevel.Danger,
+                };
+            }
         }
 
         private ApplicationUser CreateUser(RegisterInputDTO userData)

@@ -2,7 +2,16 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
+    "paths": {
+      "@environments/*": ["src/environments/*"],
+      "@services/*": ["src/app/services/*"],
+      "@interfaces/*": ["src/app/interfaces/*"],
+      "@validators/*": ["src/app/validators/*"],
+      "@globalValues": ["src/app/globalValues.ts"],
+      "@data/*": ["src/app/data/*"],
+      "@utils/*": ["src/app/utils/*"],
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,

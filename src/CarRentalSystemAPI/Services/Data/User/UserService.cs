@@ -18,5 +18,12 @@
                 .AllAsNoTracking()
                 .Any(x => x.PersonalIdentificationNumber == pin);
         }
+
+        public bool UsernameExists(string username)
+        {
+            return this.userRepository
+                .AllAsNoTracking()
+                .Any(x => x.UserName == username);
+        }
     }
 }

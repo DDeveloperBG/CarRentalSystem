@@ -38,7 +38,7 @@
         {
             serviceCollection.AddTransient<IEmailSenderService, GmailEmailSender>();
             serviceCollection.AddTransient<IUrlService, UrlService>();
-            serviceCollection.AddTransient<IAuthService, AuthService>();
+            serviceCollection.AddTransient<IUserService, UserService>();
         }
     }
 }

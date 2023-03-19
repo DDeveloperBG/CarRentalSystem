@@ -12,8 +12,8 @@
             options.Password.RequireNonAlphanumeric = false;
             options.Password.RequiredLength = 6;
 
-            options.SignIn.RequireConfirmedAccount = true;
-            options.SignIn.RequireConfirmedEmail = true;
+            options.SignIn.RequireConfirmedAccount = false;
+            options.SignIn.RequireConfirmedEmail = false;
 
             options.Lockout.MaxFailedAccessAttempts = 15;
             options.Lockout.DefaultLockoutTimeSpan = new System.TimeSpan(hours: 1, 0, 0);
