@@ -264,12 +264,15 @@ namespace WebAPI.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CarBrand")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CarCreationYear")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CarModel")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -318,6 +321,9 @@ namespace WebAPI.Data.Migrations
                     b.Property<DateTime>("FromDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -325,6 +331,7 @@ namespace WebAPI.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PickupLocation")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ToDate")

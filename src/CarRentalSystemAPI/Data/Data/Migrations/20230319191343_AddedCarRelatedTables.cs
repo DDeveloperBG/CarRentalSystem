@@ -15,9 +15,9 @@ namespace WebAPI.Data.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RentPricePerDay = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CarBrand = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CarModel = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CarCreationYear = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CarBrand = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CarModel = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CarCreationYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumberPassengerSeats = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -35,9 +35,10 @@ namespace WebAPI.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     FromDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ToDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PickupLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PickupLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CarId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),

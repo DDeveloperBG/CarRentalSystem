@@ -13,10 +13,13 @@
             this.Id = Guid.NewGuid().ToString();
         }
 
+        public bool IsConfirmed { get; set; }
+
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }
 
+        [Required]
         public string PickupLocation { get; set; }
 
         [Required]

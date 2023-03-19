@@ -12,7 +12,7 @@ using WebAPI.Data;
 namespace WebAPI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230319191019_AddedCarRelatedTables")]
+    [Migration("20230319191343_AddedCarRelatedTables")]
     partial class AddedCarRelatedTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -266,12 +266,15 @@ namespace WebAPI.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CarBrand")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CarCreationYear")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CarModel")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -320,6 +323,9 @@ namespace WebAPI.Data.Migrations
                     b.Property<DateTime>("FromDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -327,6 +333,7 @@ namespace WebAPI.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PickupLocation")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ToDate")
