@@ -27,7 +27,7 @@
 
             await this.carRentingRequestRepository.AddAsync(carRentRequest);
 
-            await this.carAdvertisementRepository.SaveChangesAsync();
+            await this.carRentingRequestRepository.SaveChangesAsync();
         }
 
         public async Task AddCarAdvertisementAsync(AddCarAdvertisementInputDTO input)
