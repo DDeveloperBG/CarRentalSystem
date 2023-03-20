@@ -21,6 +21,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Common\WebAPI.Common.csproj" />
 	  <ProjectReference Include="..\Data\Models\WebAPI.Data.Models.csproj" />
+	  <ProjectReference Include="..\Services\Mapping\WebAPI.Services.Mapping.csproj" />
 	</ItemGroup>
 
 </Project>

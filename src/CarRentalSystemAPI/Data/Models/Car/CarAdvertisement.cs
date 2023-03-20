@@ -1,6 +1,7 @@
-﻿namespace WebAPI.Data.Models.Car
+﻿namespace WebAPI.Data.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using WebAPI.Data.Common.Models;
@@ -10,6 +11,8 @@
         public CarAdvertisement()
         {
             this.Id = Guid.NewGuid().ToString();
+
+            this.CarRentingRequests = new HashSet<CarRentingRequest>();
         }
 
         public decimal RentPricePerDay { get; set; }
@@ -26,5 +29,7 @@
         public int NumberPassengerSeats { get; set; }
 
         public string Description { get; set; }
+
+        public ICollection<CarRentingRequest> CarRentingRequests { get; set; }
     }
 }

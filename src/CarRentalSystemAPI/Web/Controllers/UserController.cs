@@ -1,19 +1,14 @@
 ﻿namespace WebAPI.Controllers
 {
-    using System.IdentityModel.Tokens.Jwt;
-    using System.Security.Claims;
-
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+
     using WebAPI.DTOs.Auth;
     using WebAPI.DTOs.Enums;
-    using WebAPI.Infrastructure.DTOs;
     using WebAPI.Models;
     using WebAPI.Services.BusinessLogic.Auth;
 
-    [ApiController]
-    [Route("api/[controller]/[action]")]
-    public class UserController : ControllerBase
+    public class UserController : BaseApiController
     {
         private readonly IUserService authService;
 
@@ -42,13 +37,6 @@
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegisterInputDTO userData)
         {
-            var validationResult = userData.ValidateInput(this.ModelState);
-
-            if (!validationResult.IsSuccessful)
-            {
-                return this.Ok(validationResult);
-            }
-
             var result = await this.authService.RegisterUserAsync(userData);
 
             if (result.IsSuccessful)
@@ -69,13 +57,6 @@
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginInputDTO userData)
         {
-            var validationResult = userData.ValidateInput(this.ModelState);
-
-            if (!validationResult.IsSuccessful)
-            {
-                return this.Ok(validationResult);
-            }
-
             var result = await this.authService.LoginUserAsync(userData);
 
             if (result.IsSuccessful)
@@ -96,26 +77,9 @@
         [Authorize]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailInputDTO input)
         {
-            var validationResult = input.ValidateInput(this.ModelState);
+            var sid = this.GetUserId();
 
-            if (!validationResult.IsSuccessful)
-            {
-                return this.Ok(validationResult);
-            }
-
-            var sid = (this.User.Identity as ClaimsIdentity).FindFirst(JwtRegisteredClaimNames.Sid);
-
-            if (sid == null)
-            {
-                return this.Ok(new RequestResultDTO
-                {
-                    IsSuccessful = false,
-                    DangerLevel = DangerLevel.Danger,
-                    Message = "Problem with sid occured! Report to developers!",
-                });
-            }
-
-            var result = await this.authService.ConfirmEmailAsync(sid.Value, input.Code);
+            var result = await this.authService.ConfirmEmailAsync(sid, input.Code);
 
             return this.Ok(result);
         }

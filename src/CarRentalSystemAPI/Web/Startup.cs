@@ -4,6 +4,7 @@
 
     using Serilog;
     using WebAPI.Infrastructure.Extension;
+    using WebAPI.Infrastructure.Filter;
     using WebAPI.Models;
     using WebAPI.Services.Mapping;
 
@@ -25,26 +26,36 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddEndpointsApiExplorer();
-
             services.AddDatabase(this.configuration, this.currentEnvironment);
 
-            services.AddAuth(this.configuration);
-
             services.AddSwaggerOpenAPI();
-
             services.AddVersion();
+            services.AddHealthCheck(this.configuration);
 
             services.AddSingleton(this.configuration);
             Services.BusinessLogic.DependencyInjection.AddServices(services, this.configuration);
             Services.Data.DependencyInjection.AddServices(services);
 
-            services.AddHealthCheck(this.configuration);
+            services.AddAuth(this.configuration);
+
+            services.AddMvc().AddMvcOptions(options =>
+            {
+                options.Filters.Add<InputValidatingFilter>();
+            });
+
+            services.AddControllers();
+            services.AddEndpointsApiExplorer();
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory log)
         {
+            // This allows request body to be rereadable.
+            app.Use((context, next) =>
+            {
+                context.Request.EnableBuffering();
+                return next();
+            });
+
             AutoMapperConfig.RegisterMappings(typeof(RequestResultDTO<>).GetTypeInfo().Assembly);
 
             app.ConfigureDbContext();

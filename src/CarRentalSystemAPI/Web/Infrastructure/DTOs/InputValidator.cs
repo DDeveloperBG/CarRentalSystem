@@ -1,23 +1,25 @@
 ﻿namespace WebAPI.Infrastructure.DTOs
 {
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using System.ComponentModel.DataAnnotations;
+
     using WebAPI.DTOs;
     using WebAPI.Models;
 
     public static class InputValidator
     {
         public static RequestResultDTO ValidateInput(
-            this ValidatedInput input,
-            ModelStateDictionary modelState)
+            this ValidatedInput input)
         {
             var result = new RequestResultDTO()
             {
                 IsSuccessful = false,
             };
 
-            if (!modelState.IsValid)
+            var validator = new ValidationContext(input);
+            var allErrors = new List<ValidationResult>();
+
+            if (!Validator.TryValidateObject(input, validator, allErrors, true))
             {
-                var allErrors = modelState.Values.SelectMany(v => v.Errors);
                 result.Message = string.Join(Environment.NewLine, allErrors);
 
                 return result;

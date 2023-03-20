@@ -1,9 +1,10 @@
-﻿namespace WebAPI.Data.Models.Car
+﻿namespace WebAPI.Data.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    using WebAPI.Common;
     using WebAPI.Data.Common.Models;
 
     public class CarRentingRequest : BaseDeletableModel<string>
@@ -20,7 +21,10 @@
         public DateTime ToDate { get; set; }
 
         [Required]
-        public string PickupLocation { get; set; }
+        [ForeignKey(nameof(PickupLocation))]
+        public string PickupLocationId { get; set; }
+
+        public PickupLocation PickupLocation { get; set; }
 
         [Required]
         [ForeignKey(nameof(Car))]
@@ -33,5 +37,15 @@
         public string UserId { get; set; }
 
         public ApplicationUser User { get; set; }
+
+        public static void ValidateRentPeriod(DateTime from, DateTime to)
+        {
+            int minDays = ValidationConstants.CarRentingRequest.MinRentingPeriodInDays;
+            if (to - from < TimeSpan.FromDays(minDays))
+            {
+                throw new ArgumentException(
+                    $"Renting period should be at least {minDays} days!");
+            }
+        }
     }
 }

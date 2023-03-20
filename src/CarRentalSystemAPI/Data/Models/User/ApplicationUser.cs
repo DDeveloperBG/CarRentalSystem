@@ -15,9 +15,11 @@
         public ApplicationUser()
         {
             this.Id = Guid.NewGuid().ToString();
+
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.CarRentingRequests = new HashSet<CarRentingRequest>();
         }
 
         [Required]
@@ -44,6 +46,8 @@
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        public ICollection<CarRentingRequest> CarRentingRequests { get; set; }
 
         public static void ValidateUsername(string username)
         {

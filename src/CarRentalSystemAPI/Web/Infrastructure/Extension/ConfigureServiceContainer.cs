@@ -89,6 +89,8 @@
         {
             serviceCollection.AddSwaggerGen(setupAction =>
             {
+                setupAction.CustomSchemaIds(x => x.FullName);
+
                 setupAction.SwaggerDoc(
                     "v1",
                     new OpenApiInfo()

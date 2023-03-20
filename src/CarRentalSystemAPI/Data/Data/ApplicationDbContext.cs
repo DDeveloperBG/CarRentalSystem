@@ -11,7 +11,6 @@
 
     using WebAPI.Data.Common.Models;
     using WebAPI.Data.Models;
-    using WebAPI.Data.Models.Car;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -28,6 +27,8 @@
         public DbSet<CarAdvertisement> CarAdvertisements { get; set; }
 
         public DbSet<CarRentingRequest> CarRentingRequests { get; set; }
+
+        public DbSet<PickupLocation> PickupLocations { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
