@@ -40,7 +40,8 @@
 
         public static void ValidateRentPeriod(DateTime from, DateTime to)
         {
-            int minDays = ValidationConstants.CarRentingRequest.MinRentingPeriodInDays;
+            int minDays = ValidationConstants.Car.RentingRequest.MinPeriodInDays;
+
             if (to - from < TimeSpan.FromDays(minDays))
             {
                 throw new ArgumentException(

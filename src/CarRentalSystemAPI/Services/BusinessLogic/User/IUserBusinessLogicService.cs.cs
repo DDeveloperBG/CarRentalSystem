@@ -3,7 +3,7 @@
     using WebAPI.DTOs.Auth;
     using WebAPI.Models;
 
-    public interface IUserService
+    public interface IUserBusinessLogicService
     {
         Task<RequestResultDTO<UserDTO>> RegisterUserAsync(RegisterInputDTO userData);
 

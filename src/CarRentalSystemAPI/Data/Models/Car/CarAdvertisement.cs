@@ -5,6 +5,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using WebAPI.Data.Common.Models;
+    using WebAPI.Data.Models.Car;
 
     public class CarAdvertisement : BaseDeletableModel<string>
     {
@@ -13,6 +14,7 @@
             this.Id = Guid.NewGuid().ToString();
 
             this.CarRentingRequests = new HashSet<CarRentingRequest>();
+            this.CarImages = new HashSet<CarImage>();
         }
 
         public decimal RentPricePerDay { get; set; }
@@ -29,6 +31,8 @@
         public int NumberPassengerSeats { get; set; }
 
         public string Description { get; set; }
+
+        public ICollection<CarImage> CarImages { get; set; }
 
         public ICollection<CarRentingRequest> CarRentingRequests { get; set; }
     }

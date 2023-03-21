@@ -5,35 +5,35 @@
 
     using WebAPI.Common;
     using WebAPI.DTOs.Car;
-    using WebAPI.Services.Data.Car;
+    using WebAPI.Services.BusinessLogic.Car;
 
     public class CarController : BaseApiController
     {
-        private readonly ICarService carService;
+        private readonly ICarBusinessLogicService carService;
 
-        public CarController(ICarService carService)
+        public CarController(ICarBusinessLogicService carService)
         {
             this.carService = carService;
         }
 
         [HttpPost]
         [Authorize(Roles = GlobalConstants.Roles.UserRoleName)]
-        public async Task<IActionResult> AddCarRentingRequest(AddCarRentingRequestInputDTO input)
+        public async Task<IActionResult> AddRentingRequest(AddCarRentingRequestInputDTO input)
         {
             input.UserId = this.GetUserId();
 
-            await this.carService.AddCarRentingRequestAsync(input);
+            var response = await this.carService.AddCarRentingRequestAsync(input);
 
-            return this.Ok();
+            return this.Ok(response);
         }
 
         [HttpPost]
         [Authorize(Roles = GlobalConstants.Roles.AdministratorRoleName)]
-        public async Task<IActionResult> AddCarAdvertisement(AddCarAdvertisementInputDTO input)
+        public async Task<IActionResult> AddAdvertisement(AddCarAdvertisementInputDTO input)
         {
-            await this.carService.AddCarAdvertisementAsync(input);
+            var response = await this.carService.AddCarAdvertisementAsync(input);
 
-            return this.Ok();
+            return this.Ok(response);
         }
     }
 }

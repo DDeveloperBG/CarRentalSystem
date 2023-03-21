@@ -4,6 +4,10 @@
     {
         public const string SystemName = "CarRentalSystem";
 
+        public const int CarImgWidth = 200;
+
+        public const string CloudinaryCarImagesFolder = "CarImages";
+
         public static class Roles
         {
             public const string UserRoleName = "user";
@@ -48,6 +52,17 @@
                 public static readonly string Password = GetChildKey(ParentObject, "Password");
 
                 private const string ParentObject = "Gmail";
+            }
+
+            public static class Cloudinary
+            {
+                public static readonly string CloudName = GetChildKey(ParentObject, "CloudName");
+
+                public static readonly string ApiKey = GetChildKey(ParentObject, "ApiKey");
+
+                public static readonly string ApiSecret = GetChildKey(ParentObject, "ApiSecret");
+
+                private const string ParentObject = "Cloudinary";
             }
         }
     }

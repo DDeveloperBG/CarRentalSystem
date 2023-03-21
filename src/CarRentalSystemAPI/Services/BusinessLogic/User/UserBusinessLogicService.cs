@@ -17,26 +17,27 @@
     using WebAPI.Models;
     using WebAPI.Services.BusinessLogic.EmailSender;
     using WebAPI.Services.BusinessLogic.Url;
+    using WebAPI.Services.Data.User;
 
-    public class UserService : IUserService
+    public class UserBusinessLogicService : IUserBusinessLogicService
     {
         private readonly JWTSettings jwtSettings;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IUserStore<ApplicationUser> userStore;
         private readonly IEmailSenderService emailSender;
-        private readonly ILogger<UserService> logger;
+        private readonly ILogger<UserBusinessLogicService> logger;
         private readonly IUrlService urlService;
-        private readonly Data.User.IUserService userService;
+        private readonly IUserService userService;
 
-        public UserService(
+        public UserBusinessLogicService(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
-            ILogger<UserService> logger,
+            ILogger<UserBusinessLogicService> logger,
             IEmailSenderService emailSender,
             IUrlService urlService,
-            Data.User.IUserService userService,
+            IUserService userService,
             JWTSettings jwtSettings)
         {
             this.signInManager = signInManager;

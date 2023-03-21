@@ -10,9 +10,9 @@
 
     public class UserController : BaseApiController
     {
-        private readonly IUserService authService;
+        private readonly IUserBusinessLogicService authService;
 
-        public UserController(IUserService authService)
+        public UserController(IUserBusinessLogicService authService)
         {
             this.authService = authService;
         }

@@ -21,7 +21,7 @@
 
                 var options = new JsonSerializerOptions
                 {
-                    PropertyNameCaseInsensitive = true
+                    PropertyNameCaseInsensitive = true,
                 };
 
                 var inputData = JsonSerializer
@@ -39,7 +39,7 @@
             await next();
         }
 
-        private async Task<string> ReadRequestBodyAsync(HttpRequest request)
+        private static async Task<string> ReadRequestBodyAsync(HttpRequest request)
         {
             request.Body.Position = 0;
 
