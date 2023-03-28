@@ -1,5 +1,5 @@
 # CarRentalSystem
-This is an asp.net core API and angular SPA application. I developed this project for my final exam at the National program "Training for IT skills and career" of the Ministry of Education and Science (MES).
+This is an ASP.NET Core API and Angular SPA Application. I developed this project for my final exam at the National program "Training for IT skills and career" of the Ministry of Education and Science (MES).
  
 ## Credits
   
