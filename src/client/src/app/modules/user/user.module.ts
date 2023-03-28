@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
+import { CarModule } from '../car/car.module';
 
 import { UserRoutingModule } from './user-routing.module';
 
@@ -10,7 +11,12 @@ import { RegisterComponent } from './register/register.component';
 import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
-  declarations: [ProfileComponent, LoginComponent, RegisterComponent, LogoutComponent],
-  imports: [CommonModule, SharedModule, UserRoutingModule],
+  declarations: [
+    ProfileComponent,
+    LoginComponent,
+    RegisterComponent,
+    LogoutComponent,
+  ],
+  imports: [CommonModule, SharedModule, CarModule, UserRoutingModule],
 })
 export class UserModule {}

@@ -10,10 +10,10 @@ import { Router } from '@angular/router';
 import { UserService } from '@services/user.service';
 import userDataValidators from '@validators/user/index';
 import { globalValues } from '@globalValues';
-import { UserRegisterModel } from '@data/userRegisterModel';
+import { UserRegisterModel } from '@data/user/userRegisterModel';
 
 @Component({
-  selector: 'app-register',
+  selector: 'user-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
@@ -67,6 +67,15 @@ export class RegisterComponent {
   }
 
   onSubmit() {
+    if (
+      !(
+        this.personalInformationFormGroup.valid &&
+        this.userCredentialsFormGroup.valid
+      )
+    ) {
+      return;
+    }
+
     var userData = new UserRegisterModel(
       this.personalInformationForm['forename'].value,
       this.personalInformationForm['surname'].value,
@@ -76,7 +85,6 @@ export class RegisterComponent {
       this.userCredentialsForm['username'].value,
       this.userCredentialsForm['password'].value
     );
-    console.log(userData);
 
     this.userService.register(userData).subscribe((requestResult) => {
       if (requestResult.isSuccessful) {

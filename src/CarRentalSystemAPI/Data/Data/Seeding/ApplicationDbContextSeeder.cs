@@ -27,6 +27,7 @@
                           {
                               new RolesSeeder(),
                               new AdminSeeder(),
+                              new PickupLocationSeeder(),
                           };
 
             foreach (var seeder in seeders)

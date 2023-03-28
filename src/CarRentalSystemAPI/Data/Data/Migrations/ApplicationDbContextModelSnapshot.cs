@@ -258,7 +258,39 @@ namespace WebAPI.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("WebAPI.Data.Models.Car.CarAdvertisement", b =>
+            modelBuilder.Entity("WebAPI.Data.Models.Car.CarImage", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CarAdvertisementId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarAdvertisementId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("CarImage");
+                });
+
+            modelBuilder.Entity("WebAPI.Data.Models.CarAdvertisement", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -296,6 +328,10 @@ namespace WebAPI.Data.Migrations
                     b.Property<decimal>("RentPricePerDay")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("TransmissionType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
@@ -303,7 +339,7 @@ namespace WebAPI.Data.Migrations
                     b.ToTable("CarAdvertisements");
                 });
 
-            modelBuilder.Entity("WebAPI.Data.Models.Car.CarRentingRequest", b =>
+            modelBuilder.Entity("WebAPI.Data.Models.CarRentingRequest", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -354,7 +390,7 @@ namespace WebAPI.Data.Migrations
                     b.ToTable("CarRentingRequests");
                 });
 
-            modelBuilder.Entity("WebAPI.Data.Models.Car.PickupLocation", b =>
+            modelBuilder.Entity("WebAPI.Data.Models.PickupLocation", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -379,7 +415,7 @@ namespace WebAPI.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("PickupLocation");
+                    b.ToTable("PickupLocations");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -433,16 +469,23 @@ namespace WebAPI.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebAPI.Data.Models.Car.CarRentingRequest", b =>
+            modelBuilder.Entity("WebAPI.Data.Models.Car.CarImage", b =>
                 {
-                    b.HasOne("WebAPI.Data.Models.Car.CarAdvertisement", "Car")
+                    b.HasOne("WebAPI.Data.Models.CarAdvertisement", null)
+                        .WithMany("CarImages")
+                        .HasForeignKey("CarAdvertisementId");
+                });
+
+            modelBuilder.Entity("WebAPI.Data.Models.CarRentingRequest", b =>
+                {
+                    b.HasOne("WebAPI.Data.Models.CarAdvertisement", "Car")
                         .WithMany("CarRentingRequests")
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("WebAPI.Data.Models.Car.PickupLocation", "PickupLocation")
-                        .WithMany()
+                    b.HasOne("WebAPI.Data.Models.PickupLocation", "PickupLocation")
+                        .WithMany("CarRentingRequests")
                         .HasForeignKey("PickupLocationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -471,7 +514,14 @@ namespace WebAPI.Data.Migrations
                     b.Navigation("Roles");
                 });
 
-            modelBuilder.Entity("WebAPI.Data.Models.Car.CarAdvertisement", b =>
+            modelBuilder.Entity("WebAPI.Data.Models.CarAdvertisement", b =>
+                {
+                    b.Navigation("CarImages");
+
+                    b.Navigation("CarRentingRequests");
+                });
+
+            modelBuilder.Entity("WebAPI.Data.Models.PickupLocation", b =>
                 {
                     b.Navigation("CarRentingRequests");
                 });

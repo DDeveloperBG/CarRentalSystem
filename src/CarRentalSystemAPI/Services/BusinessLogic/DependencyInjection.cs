@@ -11,6 +11,7 @@
     using WebAPI.Services.BusinessLogic.CloudStorage;
     using WebAPI.Services.BusinessLogic.EmailSender;
     using WebAPI.Services.BusinessLogic.Image;
+    using WebAPI.Services.BusinessLogic.Time;
     using WebAPI.Services.BusinessLogic.Url;
 
     public static class DependencyInjection
@@ -51,6 +52,7 @@
             serviceCollection.AddTransient<IUrlService, UrlService>();
             serviceCollection.AddTransient<ICloudStorageService, CloudinaryService>();
             serviceCollection.AddTransient<IImageService, ImageService>();
+            serviceCollection.AddTransient<IDateTimeService, DateTimeService>();
 
             serviceCollection.AddTransient<IUserBusinessLogicService, UserBusinessLogicService>();
             serviceCollection.AddTransient<ICarBusinessLogicService, CarBusinessLogicService>();

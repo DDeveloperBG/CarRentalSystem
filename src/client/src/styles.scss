@@ -1,3 +1,11 @@
+$primary-color: #673ab7;
+$accent-color: #ff9800;
+$warn-color: #f44336;
+
+@export primary-color;
+@export accent-color;
+@export warn-color;
+
 html,
 body {
   height: 100%;
@@ -23,7 +31,16 @@ body {
 }
 
 .error-message {
-  color: red;
+  color: $warn-color;
   font-size: 12px;
   margin-top: 4px;
+}
+
+.colorful-form-container {
+  width: 50%;
+  margin: auto;
+  margin-top: 1rem;
+  text-align: center;
+  border: 3px solid $primary-color;
+  border-radius: 20px;
 }

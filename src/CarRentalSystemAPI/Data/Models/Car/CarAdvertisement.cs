@@ -6,12 +6,15 @@
 
     using WebAPI.Data.Common.Models;
     using WebAPI.Data.Models.Car;
+    using WebAPI.Data.Models.Enums;
 
     public class CarAdvertisement : BaseDeletableModel<string>
     {
         public CarAdvertisement()
         {
             this.Id = Guid.NewGuid().ToString();
+
+            this.TransmissionType = TransmissionTypes.Manual.ToString();
 
             this.CarRentingRequests = new HashSet<CarRentingRequest>();
             this.CarImages = new HashSet<CarImage>();
@@ -27,6 +30,9 @@
 
         [Required]
         public string CarCreationYear { get; set; }
+
+        [Required]
+        public string TransmissionType { get; set; }
 
         public int NumberPassengerSeats { get; set; }
 

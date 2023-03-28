@@ -18,7 +18,7 @@
         }
 
         [HttpGet]
-        public IActionResult UsernameExists(string username)
+        public IActionResult UsernameExists([FromQuery] string username)
         {
             if (string.IsNullOrWhiteSpace(username))
             {
@@ -41,11 +41,11 @@
 
             if (result.IsSuccessful)
             {
-                string token = this.authService.CreateJWTToken(result.Data);
+                var data = this.authService.CreateJWTToken(result.Data);
 
-                return this.Ok(new RequestResultDTO<string>
+                return this.Ok(new RequestResultDTO<AuthenticationOutputDTO>
                 {
-                    Data = token,
+                    Data = data,
                     IsSuccessful = true,
                     Message = result.Message,
                 });
@@ -61,11 +61,11 @@
 
             if (result.IsSuccessful)
             {
-                string token = this.authService.CreateJWTToken(result.Data);
+                var data = this.authService.CreateJWTToken(result.Data);
 
-                return this.Ok(new RequestResultDTO<string>
+                return this.Ok(new RequestResultDTO<AuthenticationOutputDTO>
                 {
-                    Data = token,
+                    Data = data,
                     IsSuccessful = true,
                 });
             }
@@ -75,7 +75,7 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> ConfirmEmail(ConfirmEmailInputDTO input)
+        public async Task<IActionResult> ConfirmEmail([FromForm] ConfirmEmailInputDTO input)
         {
             var sid = this.GetUserId();
 

@@ -5,6 +5,6 @@
 
     public interface IImageService
     {
-        Task<Stream> ProcessAsync(Stream image, int width);
+        Task<Stream> ProcessAsync(Stream image, int wantedHeight);
     }
 }

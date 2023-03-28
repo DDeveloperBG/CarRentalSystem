@@ -6,10 +6,10 @@ import { UserService } from '@services/user.service';
 
 import { environment } from '@environments/environment';
 
-import { UserLoginModel } from '@data/userLoginModel';
+import { UserLoginModel } from '@data/user/userLoginModel';
 
 @Component({
-  selector: 'app-login',
+  selector: 'user-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -39,6 +39,10 @@ export class LoginComponent {
   }
 
   onSubmit() {
+    if (!this.userFormGroup.valid) {
+      return;
+    }
+
     var userData = new UserLoginModel(
       this.userFormGroup.controls['username'].value,
       this.userFormGroup.controls['password'].value

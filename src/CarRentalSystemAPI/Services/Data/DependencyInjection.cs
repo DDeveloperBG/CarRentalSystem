@@ -1,7 +1,9 @@
 ﻿namespace WebAPI.Services.Data
 {
     using Microsoft.Extensions.DependencyInjection;
+
     using WebAPI.Services.Data.Car.Advertisement;
+    using WebAPI.Services.Data.Car.Image;
     using WebAPI.Services.Data.Car.RentingRequest;
     using WebAPI.Services.Data.User;
 
@@ -12,6 +14,8 @@
             serviceCollection.AddTransient<IUserService, UserService>();
             serviceCollection.AddTransient<ICarAdvertisementService, CarAdvertisementService>();
             serviceCollection.AddTransient<ICarRentingRequestService, CarRentingRequestService>();
+            serviceCollection.AddTransient<ICarImageService, CarImageService>();
+            serviceCollection.AddTransient<IPickupLocationService, PickupLocationService>();
         }
     }
 }

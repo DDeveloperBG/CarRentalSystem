@@ -15,24 +15,30 @@
         {
             var inputType = context.ActionDescriptor.Parameters.FirstOrDefault()?.ParameterType;
 
-            if (inputType.IsSubclassOf(typeof(ValidatedInput)))
+            // TODO: Make it work with multipart/form-data!
+            if (
+                context.HttpContext.Request.ContentType != null &&
+                !context.HttpContext.Request.ContentType.Contains("multipart/form-data"))
             {
-                var requestBody = await ReadRequestBodyAsync(context.HttpContext.Request);
-
-                var options = new JsonSerializerOptions
+                if (inputType.IsSubclassOf(typeof(ValidatedInput)))
                 {
-                    PropertyNameCaseInsensitive = true,
-                };
+                    var requestBody = await ReadRequestBodyAsync(context.HttpContext.Request);
 
-                var inputData = JsonSerializer
-                    .Deserialize(requestBody, inputType, options) as ValidatedInput;
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true,
+                    };
 
-                var validationResult = inputData.ValidateInput();
+                    var inputData = JsonSerializer
+                        .Deserialize(requestBody, inputType, options) as ValidatedInput;
 
-                if (!validationResult.IsSuccessful)
-                {
-                    context.Result = new OkObjectResult(validationResult);
-                    return;
+                    var validationResult = inputData.ValidateInput();
+
+                    if (!validationResult.IsSuccessful)
+                    {
+                        context.Result = new OkObjectResult(validationResult);
+                        return;
+                    }
                 }
             }
 

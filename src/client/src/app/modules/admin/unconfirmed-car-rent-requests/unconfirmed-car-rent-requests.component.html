@@ -1,0 +1,59 @@
+<div class="container">
+  <h1>Unconfirmed Renting Requests</h1>
+  <mat-error *ngIf="serverError != null">
+    {{ serverError }}
+  </mat-error>
+  <mat-table [dataSource]="requests" class="mat-elevation-z8">
+    <ng-container matColumnDef="car">
+      <mat-header-cell *matHeaderCellDef> Car </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.car }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="isConfirmed">
+      <mat-header-cell *matHeaderCellDef> Is Confirmed </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.isConfirmed }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="rentingPeriod">
+      <mat-header-cell *matHeaderCellDef> Renting Period </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.fromDate }} - {{ element.toDate }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.price }} лв. </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="pickupLocation">
+      <mat-header-cell *matHeaderCellDef> Pickup Location </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.pickupLocation }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="star">
+      <mat-header-cell *matHeaderCellDef aria-label="row actions"
+        >&nbsp;</mat-header-cell
+      >
+      <mat-cell *matCellDef="let element">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          aria-label="Example icon-button with a menu"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="confirmRequest(element.id)">
+            <span>Confirm Request</span>
+          </button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+</div>

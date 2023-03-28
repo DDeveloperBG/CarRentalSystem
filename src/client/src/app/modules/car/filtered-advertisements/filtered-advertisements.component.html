@@ -1,0 +1,28 @@
+<div class="container">
+  <h3>Rent a car</h3>
+  <mat-form-field class="range-form-field" appearance="fill">
+    <mat-label>Choose renting period</mat-label>
+    <mat-date-range-input
+      [formGroup]="dateRangeFormGroup"
+      [rangePicker]="dateRange"
+    >
+      <input matStartDate placeholder="From" formControlName="from" />
+      <input matEndDate placeholder="To" formControlName="to" />
+    </mat-date-range-input>
+    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle
+      matIconSuffix
+      [for]="dateRange"
+    ></mat-datepicker-toggle>
+    <mat-date-range-picker #dateRange></mat-date-range-picker>
+  </mat-form-field>
+  <p>
+    <button mat-raised-button color="primary" (click)="updatePeriod()">
+      See available cars
+    </button>
+  </p>
+</div>
+<div class="car-types-container">
+  <h3 id="cars-header">Our cars:</h3>
+  <car-all-advertisements [period]="period"></car-all-advertisements>
+</div>

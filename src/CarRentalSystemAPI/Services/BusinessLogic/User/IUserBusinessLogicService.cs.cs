@@ -13,6 +13,6 @@
 
         RequestResultDTO<bool> UsernameExists(string username);
 
-        string CreateJWTToken(UserDTO user);
+        AuthenticationOutputDTO CreateJWTToken(UserDTO user);
     }
 }

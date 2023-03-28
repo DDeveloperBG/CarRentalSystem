@@ -166,7 +166,7 @@
             };
         }
 
-        public string CreateJWTToken(UserDTO user)
+        public AuthenticationOutputDTO CreateJWTToken(UserDTO user)
         {
             var claims = new List<Claim>
             {
@@ -196,7 +196,12 @@
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var jwtToken = tokenHandler.WriteToken(token);
 
-            return jwtToken;
+            return new AuthenticationOutputDTO
+            {
+                JWT = jwtToken,
+                Username = user.Username,
+                Roles = user.Roles,
+            };
         }
 
         public async Task<RequestResultDTO> ConfirmEmailAsync(string userId, string code)
