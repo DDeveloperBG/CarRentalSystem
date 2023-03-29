@@ -19,7 +19,12 @@
       <a mat-button routerLink="account/register">Register</a>
     </span>
     <span *ngIf="isLoggedIn">
-      <a id="profile-anchor" mat-button routerLink="account/profile">
+      <a
+        *ngIf="!isAdmin"
+        id="profile-anchor"
+        mat-button
+        routerLink="account/profile"
+      >
         <span id="user-greeting-span">Hello, {{ username }}</span>
         <button mat-icon-button>
           <mat-icon>account_circle</mat-icon>

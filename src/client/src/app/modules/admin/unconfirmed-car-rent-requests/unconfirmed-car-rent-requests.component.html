@@ -3,57 +3,92 @@
   <mat-error *ngIf="serverError != null">
     {{ serverError }}
   </mat-error>
-  <mat-table [dataSource]="requests" class="mat-elevation-z8">
-    <ng-container matColumnDef="car">
-      <mat-header-cell *matHeaderCellDef> Car </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.car }} </mat-cell>
+  <table
+    mat-table
+    [dataSource]="requests"
+    multiTemplateDataRows
+    class="mat-elevation-z8"
+  >
+    <ng-container
+      matColumnDef="{{ column }}"
+      *ngFor="let column of columnsToDisplay"
+    >
+      <th mat-header-cell *matHeaderCellDef>
+        {{ column.charAt(0).toUpperCase() + column.slice(1) }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="isConfirmed">
-      <mat-header-cell *matHeaderCellDef> Is Confirmed </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.isConfirmed }} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="rentingPeriod">
-      <mat-header-cell *matHeaderCellDef> Renting Period </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{ element.fromDate }} - {{ element.toDate }}
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="price">
-      <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.price }} лв. </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="pickupLocation">
-      <mat-header-cell *matHeaderCellDef> Pickup Location </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{ element.pickupLocation }}
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="star">
-      <mat-header-cell *matHeaderCellDef aria-label="row actions"
-        >&nbsp;</mat-header-cell
-      >
-      <mat-cell *matCellDef="let element">
+    <ng-container matColumnDef="expand">
+      <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+      <td mat-cell *matCellDef="let element">
         <button
           mat-icon-button
-          [matMenuTriggerFor]="menu"
-          aria-label="Example icon-button with a menu"
+          aria-label="expand row"
+          (click)="
+            expandedElement = expandedElement === element ? null : element;
+            $event.stopPropagation()
+          "
         >
-          <mat-icon>more_vert</mat-icon>
+          <mat-icon *ngIf="expandedElement !== element"
+            >keyboard_arrow_down</mat-icon
+          >
+          <mat-icon *ngIf="expandedElement === element"
+            >keyboard_arrow_up</mat-icon
+          >
         </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="confirmRequest(element.id)">
-            <span>Confirm Request</span>
-          </button>
-        </mat-menu>
-      </mat-cell>
+      </td>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-  </mat-table>
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td
+        mat-cell
+        *matCellDef="let element"
+        [attr.colspan]="columnsToDisplayWithExpand.length"
+        class="{{ element != expandedElement ? 'collapsed' : '' }}"
+      >
+        <div
+          class="element-detail"
+          [@detailExpand]="
+            element == expandedElement ? 'expanded' : 'collapsed'
+          "
+        >
+          <div>
+            <p class="element-position">Name: {{ element.userName }}</p>
+            <p class="element-position">
+              Personal identification number: {{ element.userPIN }}
+            </p>
+            <p class="element-position">
+              Phone number: {{ element.userPhoneNumber }}
+            </p>
+          </div>
+          <button
+            class="confirm-btn {{
+              element != expandedElement ? 'collapsed' : ''
+            }}"
+            mat-raised-button
+            color="primary"
+            (click)="confirmRequest(element.id)"
+          >
+            Confirm Request
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+    <tr
+      mat-row
+      *matRowDef="let element; columns: columnsToDisplayWithExpand"
+      class="element-row"
+      [class.expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: ['expandedDetail']"
+      class="detail-row"
+    ></tr>
+  </table>
 </div>

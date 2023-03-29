@@ -11,40 +11,32 @@
     {
         public string Id { get; set; }
 
-        public string FromDate { get; set; }
+        public string RentingPeriod => $"{this.FromDate.ToString("M/d/yyyy")} - {this.ToDate.ToString("M/d/yyyy")}";
 
         [JsonIgnore]
-        public DateTime FromDateAsDateTime { get; set; }
-
-        public string ToDate { get; set; }
+        public DateTime FromDate { get; set; }
 
         [JsonIgnore]
-        public DateTime ToDateAsDateTime { get; set; }
+        public DateTime ToDate { get; set; }
 
         public string PickupLocation { get; set; }
 
         public string Car { get; set; }
 
-        public decimal Price => ((this.ToDateAsDateTime - this.FromDateAsDateTime).Days + 1) * this.RentPricePerDay;
+        public decimal Price => ((this.ToDate - this.FromDate).Days + 1) * this.RentPricePerDay;
 
         [JsonIgnore]
         public decimal RentPricePerDay { get; set; }
 
+        public string UserName { get; set; }
+
+        public string UserPhoneNumber { get; set; }
+
+        public string UserPIN { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<CarRentingRequest, OneOfGetAllUnconfirmedRentRequestsOutputDTO>()
-                .ForMember(
-                    x => x.FromDate,
-                    opt => opt.MapFrom(src => src.FromDate.ToString("M/d/yyyy")))
-                .ForMember(
-                    x => x.ToDate,
-                    opt => opt.MapFrom(src => src.ToDate.ToString("M/d/yyyy")))
-                .ForMember(
-                    x => x.FromDateAsDateTime,
-                    opt => opt.MapFrom(src => src.FromDate))
-                .ForMember(
-                    x => x.ToDateAsDateTime,
-                    opt => opt.MapFrom(src => src.ToDate))
                 .ForMember(
                     x => x.PickupLocation,
                     opt => opt.MapFrom(src => src.PickupLocation.LocationName))
@@ -53,7 +45,13 @@
                     opt => opt.MapFrom(src => $"{src.Car.CarBrand} {src.Car.CarModel}"))
                 .ForMember(
                     x => x.RentPricePerDay,
-                    opt => opt.MapFrom(src => src.Car.RentPricePerDay));
+                    opt => opt.MapFrom(src => src.Car.RentPricePerDay))
+                 .ForMember(
+                    x => x.UserName,
+                    opt => opt.MapFrom(src => src.User.Forename + " " + src.User.Surname))
+                 .ForMember(
+                    x => x.UserPIN,
+                    opt => opt.MapFrom(src => src.User.PersonalIdentificationNumber));
         }
     }
 }
