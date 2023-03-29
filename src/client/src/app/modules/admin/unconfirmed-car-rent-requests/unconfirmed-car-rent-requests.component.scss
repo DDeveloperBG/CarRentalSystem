@@ -1,0 +1,33 @@
+.container {
+  margin: 20px;
+}
+
+table {
+  width: 100%;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+tr.element-row:not(.expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.element-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+.element-row td {
+  border-bottom-width: 0;
+}
+
+.confirm-btn {
+  float: left;
+  margin-top: -6rem;
+  margin-left: 23rem;
+}
+
+.collapsed {
+  display: none;
+}

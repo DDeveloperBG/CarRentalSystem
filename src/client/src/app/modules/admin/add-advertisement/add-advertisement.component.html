@@ -1,0 +1,118 @@
+<div class="colorful-form-container">
+  <h2>Add new car advertisement</h2>
+  <form (ngSubmit)="onSubmit()" [formGroup]="carInfoFormGroup">
+    <p *ngIf="serverError != null">
+      <mat-error>{{ serverError }}</mat-error>
+    </p>
+    <p class="input-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Car brand</mat-label>
+        <input
+          matInput
+          formControlName="carBrand"
+          placeholder="Enter car brand"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Car Model</mat-label>
+        <input
+          matInput
+          formControlName="carModel"
+          placeholder="Enter car model"
+          required
+        />
+      </mat-form-field>
+    </p>
+    <p class="input-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Car creation year</mat-label>
+        <input
+          matInput
+          formControlName="carCreationYear"
+          type="number"
+          placeholder="Enter car creation year"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Car rent price per day (BGN)</mat-label>
+        <input
+          matInput
+          formControlName="rentPricePerDay"
+          type="number"
+          placeholder="Enter rent price per day"
+          required
+        />
+      </mat-form-field>
+    </p>
+    <p id="numberPassengerSeats-input-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Number of passenger seats</mat-label>
+        <input
+          matInput
+          formControlName="numberPassengerSeats"
+          type="number"
+          placeholder="Enter number of passenger seats"
+          required
+        />
+      </mat-form-field>
+    </p>
+    <p class="full-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          formControlName="description"
+          placeholder="Enter description"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+        ></textarea>
+      </mat-form-field>
+    </p>
+    <div id="file-upload-container">
+      <input
+        type="file"
+        #fileUpload
+        (change)="onFileSelected($event)"
+        class="file-input"
+      />
+      <div id="file-upload">
+        <span *ngIf="files.length > 0">
+          <p *ngFor="let file of files">{{ file.name }}</p>
+        </span>
+        <span *ngIf="files.length == 0"> No images uploaded yet. </span>
+
+        <button
+          mat-mini-fab
+          color="primary"
+          class="upload-btn"
+          (click)="onUploadClick($event)"
+        >
+          <mat-icon>attach_file</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div id="radio-group-container">
+      <mat-label>Transmission type:</mat-label>
+      <mat-radio-group
+        matInput
+        formControlName="transmissionType"
+        aria-labelledby="car-transmission-type-radio-group"
+        class="input-row"
+      >
+        <mat-radio-button
+          *ngFor="let type of transmissionTypes; index as i"
+          [value]="i"
+          [checked]="i == defaultTransmissionType"
+        >
+          {{ type }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <p>
+      <button type="submit" mat-raised-button color="primary">Create</button>
+    </p>
+  </form>
+</div>

@@ -1,0 +1,46 @@
+$primary-color: #673ab7;
+$accent-color: #ff9800;
+$warn-color: #f44336;
+
+@export primary-color;
+@export accent-color;
+@export warn-color;
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.div-form-wrapper {
+  width: 50%;
+  border-radius: 5px;
+  box-shadow: 0 1px 1px 0 rgb(0 0 0 / 14%), 0 2px 1px -1px rgb(0 0 0 / 12%),
+    0 1px 3px 0 rgb(0 0 0 / 20%);
+  text-align: center;
+  margin: auto;
+  margin-top: 1rem;
+}
+
+.div-form-wrapper .mat-horizontal-content-container {
+  padding-bottom: 5px;
+}
+
+.error-message {
+  color: $warn-color;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.colorful-form-container {
+  width: 50%;
+  margin: auto;
+  margin-top: 1rem;
+  text-align: center;
+  border: 3px solid $primary-color;
+  border-radius: 20px;
+}

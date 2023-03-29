@@ -1,0 +1,282 @@
+<div class="div-form-wrapper">
+  <mat-stepper linear #stepper>
+    <mat-step [stepControl]="personalInformationFormGroup">
+      <form [formGroup]="personalInformationFormGroup">
+        <ng-template matStepLabel
+          >Fill out your personal information</ng-template
+        >
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Forename</mat-label>
+            <input
+              matInput
+              formControlName="forename"
+              placeholder="Enter your first name"
+              required
+            />
+            <mat-error
+              class="error-message"
+              *ngIf="
+                personalInformationForm['forename'].invalid &&
+                personalInformationForm['forename'].touched
+              "
+            >
+              <div
+                *ngIf="personalInformationForm['forename']?.errors?.['forenameLength']"
+              >
+                {{ errorMessages.forenameLength }}
+              </div>
+              <div
+                *ngIf="personalInformationForm['forename']?.errors?.['forenameInvalidChars']"
+              >
+                {{ errorMessages.forenameInvalidChars }}
+              </div>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field id="surname-input-field" appearance="outline">
+            <mat-label>Surname</mat-label>
+            <input
+              matInput
+              formControlName="surname"
+              placeholder="Enter your last name"
+              required
+            />
+            <mat-error
+              class="error-message"
+              *ngIf="
+                personalInformationForm['surname'].invalid &&
+                personalInformationForm['surname'].touched
+              "
+            >
+              <div
+                *ngIf="personalInformationForm['surname']?.errors?.['surnameLength']"
+              >
+                {{ errorMessages.surnameLength }}
+              </div>
+              <div
+                *ngIf="personalInformationForm['surname']?.errors?.['surnameInvalidChars']"
+              >
+                {{ errorMessages.surnameInvalidChars }}
+              </div>
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field id="pin-input-field" appearance="outline">
+            <mat-label>Personal Identification Number</mat-label>
+            <input
+              matInput
+              formControlName="personalIdentificationNumber"
+              placeholder="Enter your personal identification number"
+              required
+            />
+            <mat-error
+              class="error-message"
+              *ngIf="
+                personalInformationForm['personalIdentificationNumber']
+                  .invalid &&
+                personalInformationForm['personalIdentificationNumber'].touched
+              "
+            >
+              <div
+                *ngIf="personalInformationForm['personalIdentificationNumber']?.errors?.['pinInvalidChars']"
+              >
+                {{ errorMessages.pinInvalidChars }}
+              </div>
+              <div
+                *ngIf="personalInformationForm['personalIdentificationNumber']?.errors?.['pinLength']"
+              >
+                {{ errorMessages.pinLength }}
+              </div>
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field id="phone-input-field" appearance="outline">
+            <mat-label>Phone Number</mat-label>
+            <input
+              matInput
+              formControlName="phoneNumber"
+              placeholder="Enter your phone number"
+              required
+            />
+            <mat-error
+              class="error-message"
+              *ngIf="
+                personalInformationForm['phoneNumber'].invalid &&
+                personalInformationForm['phoneNumber'].touched
+              "
+            >
+              <div
+                *ngIf="personalInformationForm['phoneNumber']?.errors?.['phoneNumberInvalid']"
+              >
+                {{ errorMessages.phoneNumberInvalid }}
+              </div>
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <div class="btn-holder">
+          <button mat-raised-button color="primary" matStepperNext>
+            Continue
+          </button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="userCredentialsFormGroup">
+      <form (ngSubmit)="onSubmit()" [formGroup]="userCredentialsFormGroup">
+        <ng-template matStepLabel>Fill out user credentials</ng-template>
+        <mat-error id="server-error" class="error-message">{{ serverError }}</mat-error>
+        <p>
+          <mat-form-field
+            class="user-credentials-input-field"
+            appearance="outline"
+          >
+            <mat-label>Username</mat-label>
+            <input
+              matInput
+              formControlName="username"
+              placeholder="Enter your username"
+              required
+            />
+            <mat-error
+              class="error-message"
+              *ngIf="
+                userCredentialsForm['username'].invalid &&
+                userCredentialsForm['username'].touched
+              "
+            >
+              <div
+                *ngIf="userCredentialsForm['username']?.errors?.['required']"
+              >
+                {{ errorMessages.usernameLength }}
+              </div>
+              <div
+                *ngIf="userCredentialsForm['username']?.errors?.['usernameLength']"
+              >
+                {{ errorMessages.usernameLength }}
+              </div>
+              <div
+                *ngIf="userCredentialsForm['username']?.errors?.['usernameExists']"
+              >
+                {{ errorMessages.usernameExists }}
+              </div>
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field
+            class="user-credentials-input-field"
+            appearance="outline"
+          >
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="email"
+              formControlName="email"
+              placeholder="Enter your email"
+              required
+            />
+            <mat-error
+              class="error-message"
+              *ngIf="
+                userCredentialsForm['email'].invalid &&
+                userCredentialsForm['email'].touched
+              "
+            >
+              <div>
+                {{ errorMessages.emailInvalid }}
+              </div>
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field
+            class="user-credentials-input-field"
+            appearance="outline"
+          >
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="password"
+              placeholder="Enter your password"
+              required
+            />
+            <mat-error
+              class="error-message"
+              *ngIf="
+                userCredentialsForm['password'].invalid &&
+                userCredentialsForm['password'].touched
+              "
+            >
+              <div
+                *ngIf="userCredentialsForm['password']?.errors?.['passwordLength']"
+              >
+                {{ errorMessages.passwordLength }}
+              </div>
+              <div
+                *ngIf="userCredentialsForm['password']?.errors?.['passwordRequireDigit']"
+              >
+                {{ errorMessages.passwordRequireDigit }}
+              </div>
+              <div
+                *ngIf="userCredentialsForm['password']?.errors?.['passwordRequireLowercase']"
+              >
+                {{ errorMessages.passwordRequireLowercase }}
+              </div>
+              <div
+                *ngIf="userCredentialsForm['password']?.errors?.['passwordRequireUppercase']"
+              >
+                {{ errorMessages.passwordRequireUppercase }}
+              </div>
+              <div
+                *ngIf="userCredentialsForm['password']?.errors?.['passwordRequireNonAlphanumeric']"
+              >
+                {{ errorMessages.passwordRequireNonAlphanumeric }}
+              </div>
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field
+            class="user-credentials-input-field"
+            appearance="outline"
+          >
+            <mat-label>Confirm Password</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="confirmPassword"
+              placeholder="Type again your password"
+              required
+            />
+          </mat-form-field>
+          <mat-error
+            class="error-message"
+            *ngIf="
+              userCredentialsForm['confirmPassword'].invalid &&
+              userCredentialsForm['confirmPassword'].touched
+            "
+          >
+            <div
+              *ngIf="userCredentialsForm['confirmPassword']?.errors?.['confirmPasswordRequireMatch']"
+            >
+              {{ errorMessages.confirmPasswordRequireMatch }}
+            </div>
+          </mat-error>
+        </p>
+        <div class="btn-holder">
+          <button id="back-button" mat-button matStepperPrevious>Back</button>
+          <button type="submit" mat-raised-button color="primary">
+            Register
+          </button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+  <div class="text-center mb-4">
+    <p id="already-user-p">
+      Already have account? Then just <a routerLink="/account/login">Login</a>!
+    </p>
+  </div>
+</div>

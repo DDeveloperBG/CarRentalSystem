@@ -1,0 +1,50 @@
+form {
+  min-width: 200px;
+  max-height: 500px;
+  width: 100%;
+}
+
+#surname-input-field {
+  margin-left: 10px;
+}
+
+#pin-input-field {
+  width: 50%;
+}
+
+#phone-input-field {
+  width: 50%;
+}
+
+.user-credentials-input-field {
+  width: 60%;
+}
+
+mat-error {
+  margin-top: -1.2rem;
+  text-align: center;
+}
+
+mat-stepper p {
+  margin-bottom: 2rem;
+}
+
+#server-error {
+  display: initial;
+}
+
+#back-button {
+  margin-right: 10px;
+}
+
+#already-user-p {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #565656;
+  padding-bottom: 10px;
+}
+
+.btn-holder {
+  margin-top: -15px;
+}

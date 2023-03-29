@@ -1,0 +1,32 @@
+<div class="colorful-form-container">
+  <h1>{{ carAdDetails?.carBrand }} {{ carAdDetails?.carModel }}</h1>
+  <p><img src="{{ carAdDetails?.carImageUrl }}" /></p>
+  <p class="item">
+    <span>From: {{ fromDate }}</span>
+    <span id="right-date">To: {{ toDate }}</span>
+  </p>
+  <form [formGroup]="requestFormGroup">
+    <mat-form-field appearance="fill">
+      <mat-label>Choose pickup location</mat-label>
+      <mat-select disableRipple formControlName="pickupLocation" required>
+        <mat-option
+          *ngFor="let location of pickupLocations"
+          value="{{ location.id }}"
+        >
+          {{ location.locationName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+  <p class="item" id="item-after-form">
+    Full price: <span id="price-label">{{ rentPrice }}</span> лв.
+  </p>
+  <button
+    id="rent-btn"
+    mat-raised-button
+    color="primary"
+    (click)="addRentingRequest()"
+  >
+    Rent
+  </button>
+</div>

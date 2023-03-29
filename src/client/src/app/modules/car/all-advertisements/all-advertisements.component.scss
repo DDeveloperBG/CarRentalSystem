@@ -1,0 +1,53 @@
+@import "/src/styles.scss";
+
+.card {
+  max-width: 400px;
+  display: inline-block;
+  margin: 10px;
+}
+
+mat-card-header {
+  margin-bottom: 5px;
+}
+
+mat-card-content {
+  margin-top: 5px;
+}
+
+.price {
+  font-weight: 500;
+}
+
+.before-img-text {
+  vertical-align: super;
+  margin-right: 10px;
+}
+
+.transmission-type-img {
+  width: 30px;
+}
+
+.seats-count-img {
+  width: 25px;
+}
+
+.seats-count-number {
+  vertical-align: top;
+  margin: 3px;
+  font-weight: 500;
+}
+
+.icon-item {
+  margin: 0 7px;
+}
+
+.creation-year-text {
+  right: 1rem;
+  position: absolute;
+  font-weight: 600;
+  color: $primary-color;
+}
+
+.reserve-btn-container {
+  float: right;
+}

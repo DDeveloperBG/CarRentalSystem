@@ -1,0 +1,65 @@
+<mat-error *ngIf="serverError != null">
+  {{ serverError }}
+</mat-error>
+<div>
+  <mat-card *ngFor="let car of allCars?.all" id="{{ car.id }}" class="card">
+    <mat-card-header>
+      <mat-card-title>{{ car.carBrand }}</mat-card-title>
+      <mat-card-subtitle>{{ car.carModel }}</mat-card-subtitle>
+      <span class="creation-year-text" matTooltip="Car Creation Year">{{
+        car.carCreationYear
+      }}</span>
+    </mat-card-header>
+    <img mat-card-image src="{{ car.carImageUrl }}" alt="Car photo" />
+    <mat-card-content>
+      <p class="price">Price per day: {{ car.rentPricePerDay }} лв.</p>
+      <p>
+        <span class="icon-item">
+          <span *ngIf="car.transmissionType == 'Manual'">
+            <img
+              class="transmission-type-img"
+              src="/assets/imgs/manual-transmission.png"
+              matTooltip="Manual"
+            />
+          </span>
+          <span *ngIf="car.transmissionType == 'Automatic'">
+            <img
+              class="transmission-type-img"
+              src="/assets/imgs/automatic-transmission.png"
+              matTooltip="Automatic"
+            />
+          </span>
+        </span>
+        <span class="icon-item" matTooltip="Number of seats">
+          <img class="seats-count-img" src="/assets/imgs/car-door.png" />
+          <span class="seats-count-number">{{ car.numberPassengerSeats }}</span>
+        </span>
+        <span class="reserve-btn-container">
+          <a
+            mat-raised-button
+            color="primary"
+            *ngIf="!isAdmin && period != undefined"
+            (click)="requestToReserveCar($event)"
+            >Reserve</a
+          >
+          <button
+            mat-raised-button
+            color="warn"
+            *ngIf="isAdmin"
+            (click)="deleteCar($event)"
+          >
+            Delete
+          </button>
+        </span>
+      </p>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>More Info</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-panel-description>
+          {{ car.description }}
+        </mat-panel-description>
+      </mat-expansion-panel>
+    </mat-card-content>
+  </mat-card>
+</div>
